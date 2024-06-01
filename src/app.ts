@@ -1,16 +1,27 @@
-import express, { Request, Response } from 'express';
-import authRouter from './routes/googleAuthRoutes';
-import profileRouetr from './routes/profileRoutes';
 import dotenv from 'dotenv';
-import { connect } from 'mongoose';
+dotenv.config();
+
+import express, { Request, Response } from 'express';
+import googleAuthRouter from './routes/social-auth.routes';
+import authRouter from './routes/auth.routes';
+import profileRouetr from './routes/profile.routes';
+import { pgDataSource } from './database/app-data-source';
 import cookieSession from 'express-session';
 import passport from 'passport';
 
-const passportSetup = require('./config/passportSetup');
-
-dotenv.config();
+require('./config/passportSetup');
 
 const app = express();
+
+// Connecting to DB
+pgDataSource
+    .initialize()
+    .then(() => {
+        console.log('Data Source has been initialized!');
+    })
+    .catch((err) => {
+        console.error('Error during Data Source initialization:', err);
+    });
 
 app.set('view engine', 'ejs');
 
@@ -30,7 +41,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use('/auth', authRouter);
+app.use('/auth', authRouter, googleAuthRouter);
 app.use('/profile', profileRouetr);
 
 app.get('/', (req: Request, res: Response) => {
@@ -39,7 +50,6 @@ app.get('/', (req: Request, res: Response) => {
 
 app.listen(3000, async () => {
     try {
-        await connect(process.env.MONGO_URI as string);
         console.log('App is listening on 3000 Port');
     } catch (err) {
         console.log('Something went wrong: ', err);
