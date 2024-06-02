@@ -6,7 +6,7 @@ const authOptions = {
         scope: ['profile', 'email'],
     },
     linkedin: {
-        scope: ['openid', 'profile', 'email'],
+        scope: ['r_liteprofile', 'r_emailaddress'],
     },
     apple: {
         scope: ['name', 'email'],

@@ -63,7 +63,7 @@ passport.use(
             clientID: process.env.LINKEDIN_CLIENTID as string,
             clientSecret: process.env.LINKEDIN_CLIENT_SECRET as string,
             callbackURL: '/auth/linkedin/redirect',
-            scope: ['openid', 'profile', 'email'],
+            scope: ['r_liteprofile', 'r_emailaddress'],
         },
         async (accessToken, refreshToken, profileInfo, done) => {
             try {
