@@ -18,6 +18,7 @@ passport.deserializeUser(async (id: number, done) => {
 
 async function findOrCreateUser(profileInfo: any): Promise<User> {
     const userRepository = pgDataSource.getRepository(User);
+    console.log(profileInfo);
 
     const { id, displayName, emails, provider } = profileInfo;
 
@@ -62,6 +63,7 @@ passport.use(
             clientID: process.env.LINKEDIN_CLIENTID as string,
             clientSecret: process.env.LINKEDIN_CLIENT_SECRET as string,
             callbackURL: '/auth/linkedin/redirect',
+            scope: ['openid', 'profile', 'email'],
         },
         async (accessToken, refreshToken, profileInfo, done) => {
             try {
