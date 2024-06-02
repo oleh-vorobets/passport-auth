@@ -9,7 +9,7 @@ import { pgDataSource } from './database/app-data-source';
 import cookieSession from 'express-session';
 import passport from 'passport';
 
-require('./config/passportSetup');
+require('./config/passport-setup');
 
 const app = express();
 
