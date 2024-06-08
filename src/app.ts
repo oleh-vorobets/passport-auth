@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import express, { Request, Response } from 'express';
-import googleAuthRouter from './routes/social-auth.routes';
+import socialAuthRouter from './routes/social-auth.routes';
 import authRouter from './routes/auth.routes';
 import profileRouetr from './routes/profile.routes';
 import { pgDataSource } from './database/app-data-source';
@@ -41,7 +41,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use('/auth', authRouter, googleAuthRouter);
+app.use('/auth', authRouter, socialAuthRouter);
 app.use('/profile', profileRouetr);
 
 app.get('/', (req: Request, res: Response) => {

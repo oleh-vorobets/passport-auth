@@ -18,7 +18,6 @@ passport.deserializeUser(async (id: number, done) => {
 
 async function findOrCreateUser(profileInfo: any): Promise<User> {
     const userRepository = pgDataSource.getRepository(User);
-    console.log(profileInfo);
 
     const { id, displayName, emails, provider } = profileInfo;
 
